@@ -4,7 +4,7 @@ import client from './client';
 import { SEARCH_REPOSITORIES } from './graphql';
 
 // client.query({query: ME}).then(result => console.log(result))
-const VARIABLES = {
+const DEFAULT_STATE = {
   first: 5,
   after: null,
   last: null,
@@ -22,12 +22,18 @@ const App: React.FC = () => {
 }
 
 const Name: React.FC = () => {
-  const { loading, error, data } = useQuery(SEARCH_REPOSITORIES, { variables: VARIABLES });
-  console.log(data)
-  if (loading) return <p>Loading...</p>
-  if (error) return <p>Error {error.message}</p>
+  const [query, setQuery] = React.useState(DEFAULT_STATE.query);
 
-  return <div></div>
+  const { loading, error, data } = useQuery(SEARCH_REPOSITORIES, { variables: { ...DEFAULT_STATE ,query }});
+  console.log(data)
+
+  return (<div>
+    <form>
+      <input value={query} onChange={(event) => {setQuery(event.target.value)}} />
+    </form>
+    {loading ? <p>Loading...</p> : null}
+    {error ? <p>Error {error.message}</p> : null}
+  </div>)
 }
 
 export default App;
