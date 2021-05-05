@@ -31,7 +31,18 @@ const Content: React.FC = () => {
     <div>
       <Form query={query} setQuery={setQuery} />
       <div>GitHub Repositories Search Result - {repositoryCount} {repositoryUnit}</div>
-      {loading ? <p>Loading...</p> : null}
+      {loading ? <p>Loading...</p> : (
+        <ul>
+          {data.search.edges.map((edge: any) => {
+            const node = edge.node
+            return (
+              <li>
+                <a href={node.url}>{node.name}</a>
+              </li>
+            )
+          })}
+        </ul>
+      )}
       {error ? <p>Error {error.message}</p> : null}
     </div>
   )
