@@ -17,7 +17,7 @@ const DEFAULT_STATE: typeQuery = {
   after: null,
   last: null,
   before: null,
-  query: "フロントエンジニア"
+  query: "フロントエンドエンジニア"
 }
 
 const Content: React.FC = () => {
@@ -67,7 +67,7 @@ const Content: React.FC = () => {
               const node = edge.node
               return (
                 <li key={index}>
-                  <a href={node.url}>{node.name}</a>
+                  <a href={node.url} target='_blank' rel="noopener noreferrer" >{node.name}</a>
                   &nbsp;
                   <StarButton node={node} />
                 </li>
