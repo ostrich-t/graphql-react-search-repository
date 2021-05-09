@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useQuery, useMutation } from 'react-apollo';
-import { SEARCH_REPOSITORIES, ADD_STAR } from '../graphql';
+import { SEARCH_REPOSITORIES, ADD_STAR, REMOVE_STAR } from '../graphql';
 import Form from './Form';
 import StarButton from './StarButton';
 
@@ -27,6 +27,8 @@ const Content: React.FC = () => {
 
   const { loading, error, data } = useQuery(SEARCH_REPOSITORIES, { variables: { ...query }});
   const [addStar] = useMutation(ADD_STAR);
+  const [removeStar] = useMutation(REMOVE_STAR);
+
   console.log(data)
   useEffect(() => {
     if (!loading && !error) {
@@ -57,8 +59,12 @@ const Content: React.FC = () => {
     })
   }
 
-  const clickStar = (id: string) => {
-    addStar({ variables: { input: { starrableId: id }}});
+  const addOrRemoveStar = (node: any) => {
+    if (node.viewerHasStarred) {
+      removeStar({ variables: { input: { starrableId: node.id }}});
+    } else {
+      addStar({ variables: { input: { starrableId: node.id }}});
+    }
   }
 
   return (
@@ -74,7 +80,7 @@ const Content: React.FC = () => {
                 <li key={index}>
                   <a href={node.url} target='_blank' rel="noopener noreferrer" >{node.name}</a>
                   &nbsp;
-                  <StarButton node={node} onClick={clickStar} />
+                  <StarButton node={node} onClick={addOrRemoveStar} />
                 </li>
               )
             })}

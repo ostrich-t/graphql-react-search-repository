@@ -2,7 +2,7 @@ import React from 'react';
 
 interface StarButtonProps {
   node: any
-  onClick: (id: string) => void
+  onClick: (node: any) => void
 }
 
 const StarButton: React.FC<StarButtonProps> = ({ node, onClick }) => {
@@ -11,7 +11,7 @@ const StarButton: React.FC<StarButtonProps> = ({ node, onClick }) => {
   const viwerHasStarred = node.viewerHasStarred ? 'starred' : '-';
   
   return (
-    <button onClick={() => onClick(node.id)}>{starCount} | {viwerHasStarred}</button>
+    <button onClick={() => onClick(node)}>{starCount} | {viwerHasStarred}</button>
   )
 }
 
