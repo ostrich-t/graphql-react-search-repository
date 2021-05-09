@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
-import { useQuery } from 'react-apollo';
-import { SEARCH_REPOSITORIES } from '../graphql';
+import { useQuery, useMutation } from 'react-apollo';
+import { SEARCH_REPOSITORIES, ADD_STAR } from '../graphql';
 import Form from './Form';
 import StarButton from './StarButton';
 
@@ -26,6 +26,7 @@ const Content: React.FC = () => {
   const [repositoryUnit, setRepositoryUnit] = React.useState<'Repository' | 'Repositories'>('Repositories');
 
   const { loading, error, data } = useQuery(SEARCH_REPOSITORIES, { variables: { ...query }});
+  const [addStar] = useMutation(ADD_STAR);
   console.log(data)
   useEffect(() => {
     if (!loading && !error) {
@@ -56,6 +57,10 @@ const Content: React.FC = () => {
     })
   }
 
+  const clickStar = (id: string) => {
+    addStar({ variables: { input: { starrableId: id }}});
+  }
+
   return (
     <div>
       <Form query={query} setQuery={setQuery} />
@@ -69,7 +74,7 @@ const Content: React.FC = () => {
                 <li key={index}>
                   <a href={node.url} target='_blank' rel="noopener noreferrer" >{node.name}</a>
                   &nbsp;
-                  <StarButton node={node} />
+                  <StarButton node={node} onClick={clickStar} />
                 </li>
               )
             })}
