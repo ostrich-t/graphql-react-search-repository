@@ -4,9 +4,9 @@ import { SEARCH_REPOSITORIES } from '../graphql';
 import Form from './Form';
 
 export type typeQuery = {
-  first: number;
+  first: number | null;
   after: string | null;
-  last: string | null;
+  last: number | null;
   before: string | null;
   query: string;
 }
@@ -38,9 +38,20 @@ const Content: React.FC = () => {
   const goNext = (endCursor: string) => {
     setQuery({
       ...query,
+      first: PER_PAGE,
       after: endCursor,
       last: null,
       before: null
+    })
+  }
+
+  const goPrevious = (startCursor: string) => {
+    setQuery({
+      ...query,
+      first: null,
+      after: null,
+      last: PER_PAGE,
+      before: startCursor
     })
   }
 
@@ -60,6 +71,15 @@ const Content: React.FC = () => {
               )
             })}
           </ul>
+          {data.search.pageInfo.hasPreviousPage ? 
+            <button
+              onClick={() => goPrevious(data.search.pageInfo.startCursor)}
+            >
+              Previous
+            </button> 
+            : 
+            null
+          }
           {data.search.pageInfo.hasNextPage ? 
             <button
               onClick={() => goNext(data.search.pageInfo.endCursor)}
