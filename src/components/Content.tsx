@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useQuery } from 'react-apollo';
 import { SEARCH_REPOSITORIES } from '../graphql';
 import Form from './Form';
+import StarButton from './StarButton';
 
 export type typeQuery = {
   first: number | null;
@@ -67,6 +68,8 @@ const Content: React.FC = () => {
               return (
                 <li key={index}>
                   <a href={node.url}>{node.name}</a>
+                  &nbsp;
+                  <StarButton node={node} />
                 </li>
               )
             })}
