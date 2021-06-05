@@ -8,8 +8,8 @@ const GITHUB_TOKEN = process.env.REACT_APP_GITHUB_TOKEN
 const headersLink = new ApolloLink((operation, forward) => {
   operation.setContext({
     headers: {
-      Authorization: `Bearer ${GITHUB_TOKEN}`
-    }
+      Authorization: `Bearer ${GITHUB_TOKEN}`,
+    },
   })
   return forward(operation)
 })
@@ -20,5 +20,5 @@ const link = ApolloLink.from([headersLink, httpLink])
 
 export default new ApolloClient({
   link,
-  cache: new InMemoryCache()
+  cache: new InMemoryCache(),
 })
