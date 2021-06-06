@@ -1,7 +1,9 @@
-import { ApolloClient } from 'apollo-client'
-import { ApolloLink } from 'apollo-link'
-import { HttpLink } from 'apollo-link-http'
-import { InMemoryCache } from 'apollo-cache-inmemory'
+import {
+  ApolloClient,
+  ApolloLink,
+  HttpLink,
+  InMemoryCache,
+} from '@apollo/client'
 
 const GITHUB_TOKEN = process.env.REACT_APP_GITHUB_TOKEN
 

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { useQuery, useMutation } from 'react-apollo'
+import { useQuery, useMutation } from '@apollo/client'
 import { Query, Repository } from '../@types/gql-types'
 import { SEARCH_REPOSITORIES, ADD_STAR, REMOVE_STAR } from '../graphql'
 import Form from './Form'
